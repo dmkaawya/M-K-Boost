@@ -2090,12 +2090,12 @@
         const extraDays = parseInt(document.getElementById('extra-days').value) || 0;
         let extraCost = 0;
 
-        if (extraDays === 1) extraCost = 250;
-        else if (extraDays === 2) extraCost = 350;
-        else if (extraDays === 3) extraCost = 450;
-        else if (extraDays === 4) extraCost = 550;
-        else if (extraDays === 5) extraCost = 600;
-        else if (extraDays === 6) extraCost = 1000;
+        if (extraDays === 1) extraCost = 300;
+        else if (extraDays === 2) extraCost = 400;
+        else if (extraDays === 3) extraCost = 500;
+        else if (extraDays === 4) extraCost = 650;
+        else if (extraDays === 5) extraCost = 700;
+        else if (extraDays === 6) extraCost = 1200;
         else if (extraDays > 6) extraCost = 1000 + (extraDays - 6) * 200; // Example for more days
 
         const total = currentPrice + extraCost;
@@ -2109,12 +2109,12 @@
         let extraCost = 0;
 
         // Same logic as calculateTotal
-        if (extraDays === 1) extraCost = 250;
-        else if (extraDays === 2) extraCost = 350;
-        else if (extraDays === 3) extraCost = 450;
-        else if (extraDays === 4) extraCost = 550;
-        else if (extraDays === 5) extraCost = 600;
-        else if (extraDays === 6) extraCost = 1000;
+        if (extraDays === 1) extraCost = 300;
+        else if (extraDays === 2) extraCost = 400;
+        else if (extraDays === 3) extraCost = 500;
+        else if (extraDays === 4) extraCost = 650;
+        else if (extraDays === 5) extraCost = 700;
+        else if (extraDays === 6) extraCost = 1200;
 
         const total = currentPrice + extraCost;
 
