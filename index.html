@@ -2134,19 +2134,17 @@
         localStorage.setItem('bookings', JSON.stringify(bookings));
 
         // Improved WhatsApp message with promotion (short & attractive)
-        const message = `ආයුබෝවන්! මම booking එකක් request කරනවා:\n\n` +
-            `Package: ${booking.package}\n` +
-            `Date: ${booking.date}\n` +
-            `Time: ${booking.time}\n` +
-            `Extra Days: ${booking.extraDays}\n` +
-            `Name: ${booking.name}\n` +
-            `Contact: ${booking.contact}\n` +
-            `Total: Rs.${booking.total}\n\n` +
-            `කරුණාකර confirm කරන්න. Thank you!`;
-
-        const whatsappUrl = `https://wa.me/94775048455?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-
+const message = `Hi, I'd like to book the following package:\n\n` +
+                `Package: ${booking.package}\n` +
+                `Date: ${booking.date}\n` +
+                `Time: ${booking.time}\n` +
+                `Extra Time: ${booking.extraDays}\n` +
+                `Name: ${booking.name}\n` +
+                `Contact: ${booking.contact}\n` +
+                `Payment Status: ${booking.paymentStatus}\n` +
+                `Total Amount: Rs.${booking.total}\n\n` +
+                `Please confirm my booking.`;
+        
         closeBookingModal();
         alert('Booking submitted! Check WhatsApp for confirmation.');
     }
