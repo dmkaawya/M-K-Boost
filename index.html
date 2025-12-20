@@ -628,9 +628,16 @@
    
     <main class="container">
         <div class="package-toggle">
-            <button class="toggle-btn active" id="daily-btn">Daily Packages</button>
-            <button class="toggle-btn" id="hourly-btn">Hourly Packages</button>
-        </div>
+    <button class="toggle-btn active" id="daily-btn">
+        <i class="fas fa-calendar-day mr-2"></i>Daily Packages
+    </button>
+    <button class="toggle-btn" id="hourly-btn">
+        <i class="fas fa-clock mr-2"></i>Hourly Packages
+    </button>
+    <button class="toggle-btn" id="followers-btn">
+        <i class="fas fa-users mr-2"></i>Followers Boost Package
+    </button>
+</div>
 
         <section id="daily-packages" class="package-section active">
             <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">Daily Promotion Packages</h2>
@@ -2178,6 +2185,53 @@
             dailyPackages.classList.remove('active');
         });
     });
+</script>
+<script>
+    // Package toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dailyBtn = document.getElementById('daily-btn');
+    const hourlyBtn = document.getElementById('hourly-btn');
+    const followersBtn = document.getElementById('followers-btn');
+    const dailyPackages = document.getElementById('daily-packages');
+    const hourlyPackages = document.getElementById('hourly-packages');
+    const followersPackages = document.getElementById('followers-packages');
+
+    dailyBtn.addEventListener('click', function() {
+        // Reset all buttons
+        dailyBtn.classList.add('active');
+        hourlyBtn.classList.remove('active');
+        followersBtn.classList.remove('active');
+        
+        // Hide all sections
+        dailyPackages.classList.add('active');
+        hourlyPackages.classList.remove('active');
+        followersPackages.classList.remove('active');
+    });
+
+    hourlyBtn.addEventListener('click', function() {
+        // Reset all buttons
+        dailyBtn.classList.remove('active');
+        hourlyBtn.classList.add('active');
+        followersBtn.classList.remove('active');
+        
+        // Hide all sections
+        dailyPackages.classList.remove('active');
+        hourlyPackages.classList.add('active');
+        followersPackages.classList.remove('active');
+    });
+
+    followersBtn.addEventListener('click', function() {
+        // Reset all buttons
+        dailyBtn.classList.remove('active');
+        hourlyBtn.classList.remove('active');
+        followersBtn.classList.add('active');
+        
+        // Hide all sections
+        dailyPackages.classList.remove('active');
+        hourlyPackages.classList.remove('active');
+        followersPackages.classList.add('active');
+    });
+});
 </script>
 </body>
 </html>
