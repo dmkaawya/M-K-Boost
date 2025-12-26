@@ -1,97 +1,313 @@
 <!DOCTYPE html>
-<html lang="si">
+<html lang="si" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>නීති සහ මාර්ගෝපදේශ - M-K Boost</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Rules & Guidelines - M&K Promotions</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Google Fonts for Sinhala -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'Inter', 'sans-serif'],
+                        sinhala: ['Noto Sans Sinhala', 'serif'],
+                    },
+                    colors: {
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Noto Sans Sinhala', 'Segoe UI', sans-serif; }
-        .rule-icon { color: #dc2626; }
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-gradient-animate {
+            background: radial-gradient(circle at 50% 50%, #4c1d95, #1e1b4b, #000000);
+            background-size: 200% 200%;
+            animation: bgMove 15s ease infinite;
+        }
+
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glass Card Styles */
+        .rule-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .rule-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.3);
+        }
+
+        .rule-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Watermark Number */
+        .watermark {
+            position: absolute;
+            bottom: -20px;
+            right: 0px;
+            font-size: 6rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            line-height: 1;
+            pointer-events: none;
+            transition: all 0.4s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        @media (min-width: 768px) {
+            .watermark {
+                font-size: 8rem;
+            }
+        }
+
+        .rule-card:hover .watermark {
+            transform: translateY(-10px) translateX(-10px);
+            color: rgba(255, 255, 255, 0.08);
+        }
+
+        .icon-box {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen" oncontextmenu="return false;" onkeydown="if(event.ctrlKey && event.keyCode == 85) return false;">
+<body class="bg-gradient-animate min-h-screen relative" oncontextmenu="return false;" onkeydown="if(event.ctrlKey && event.keyCode == 85) return false;">
 
-    <div class="container max-w-4xl mx-auto px-6 py-16">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-red-600 to-red-700 text-white py-10 px-8 text-center">
-                <h1 class="text-4xl font-bold flex items-center justify-center gap-4">
-                    <i class="fas fa-exclamation-triangle text-5xl"></i>
-                     Important Rules & Guidelines
-                </h1>
-                <p class="mt-4 text-lg opacity-90">M-K Boost සේවාව භාවිතා කිරීමට පෙර කරුණාකර මෙය කියවන්න</p>
+    <!-- Floating Orbs for Ambience -->
+    <div class="fixed top-20 left-20 w-48 h-48 md:w-72 md:h-72 bg-purple-600/20 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
+    <div class="fixed bottom-20 right-20 w-64 h-64 md:w-96 md:h-96 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+    <div class="container mx-auto px-4 py-8 md:py-20 relative z-10 max-w-6xl">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-12 md:mb-20 animate-float">
+            <div class="inline-flex items-center justify-center w-16 h-16 md:w-24 md:h-24 mb-4 md:mb-6 rounded-2xl md:rounded-3xl bg-gradient-to-tr from-red-500 to-pink-600 shadow-[0_0_40px_rgba(239,68,68,0.5)] border border-white/20">
+                <i class="fas fa-shield-halved text-3xl md:text-5xl text-white"></i>
+            </div>
+            <h1 class="text-3xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-400 mb-3 md:mb-4 font-sans tracking-tight">
+                Important Rules
+            </h1>
+            <p class="text-base md:text-xl text-gray-400 font-sinhala max-w-2xl mx-auto leading-relaxed px-4">
+                M-K Boost සේවාව භාවිතා කිරීමට පෙර කරුණාකර මෙම නීති කියවන්න.
+                <span class="block text-xs md:text-sm mt-2 text-gray-500 font-sans tracking-wider uppercase">Read carefully before booking</span>
+            </p>
+        </div>
+
+        <!-- Rules Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            
+            <!-- Rule 01 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">01</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-school text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        මෙම service එක <strong class="text-purple-400">අධ්‍යාපනික channels/groups, online shopping pages, සහ status videos</strong> වැනි ඕනෑම නාලිකාවන් හෝ සමූහ සඳහා පමණයි.
+                    </p>
+                </div>
             </div>
 
-            <!-- Content -->
-            <div class="p-10 md:p-12">
-                <ol class="space-y-6 text-lg text-gray-800">
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">1</span>
-                        <p>මෙම service එක <strong>අධ්‍යාපනික channels/groups, online shopping pages, සහ status videos වැනි ඕනෑම නාලිකාවන් හෝ සමූහ</strong> සඳහා පමණයි.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">2</span>
-                        <p>Adult content, gambling, alcohol, drugs, politics, religion ආදිය සම්බන්ධ content promote කිරීමට අවසර නැත.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">3</span>
-                        <p>Scam, fraud, fake news හෝ illegal activities සඳහා භාවිතා කළ නොහැක.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">4</span>
-                        <p>Order එක තහවුරු වීමෙන් පසු refund කිරීමක් සිදු නොවේ.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">5</span>
-                        <p>Boosting period එක තුළ channel/group/page එක private කිරීමෙන් හෝ delete කිරීමෙන් service එක අහිමි වේ.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">6</span>
-                        <p>ඔයාගේ link එක වැරදි නම් හෝ expire වී තිබුණොත් අපි වගකියන්නේ නැහැ.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">7</span>
-                        <p>Service එක ආරම්භ වීමට පැය 1-6 අතර කාලයක් ගත විය හැක.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">8</span>
-                        <p>Rules break කළහොත් order එක cancel කර refund නොලැබෙනු ඇත.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">9</span>
-                        <p>ඔයා බුක් කරන චැනල් එකට දවස් කීපයකින්හෝ පසු හෝ එකම දවසෙ එකම පැක් එක දෙවතාවක් ගන්න බැ ඔයාට ගන්න ඕනි පැක් එක හරියට තෝරලා අරගන්න මෙය follow boost pack සදහා පමනක් අදාල වේ daily packs ඕන එකක් ඕන වෙලාවක ගන්න පුලුවන්.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <span class="rule-icon font-bold text-2xl flex-shrink-0">10</span>
-                        <p>බුක් කරපු පැක් එකේ followers ගාන එන්න දවස් කීපයක් ගත විය හැක. මෙය එක දවසින් සිදු නොවේ.</p>
-                    </li>
-                </ol>
-
-                <!-- Warning Box -->
-                <div class="mt-12 p-8 bg-gradient-to-r from-red-100 to-red-50 border-2 border-red-300 rounded-2xl text-center">
-                    <p class="text-xl font-bold text-red-800 flex items-center justify-center gap-3">
-                        <i class="fas fa-exclamation-circle text-3xl"></i>
-                        Order එකක් තැබීමට පෙර මෙම නීති කරුණාකර කියවන්න!
-                    </p>
-                    <p class="mt-4 text-lg text-red-700">
-                        "Book Now" ක්ලික් කිරීමෙන් ඔබ මෙම නීතිවලට එකඟ වන බව සැලකේ.
+            <!-- Rule 02 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">02</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-red-600 to-orange-600 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-ban text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        Adult content, gambling, alcohol, drugs, politics, religion ආදිය සම්බන්ධ content promote කිරීමට <strong class="text-red-400">අවසර නැත.</strong>
                     </p>
                 </div>
+            </div>
 
-                <!-- Close Button -->
-                <div class="text-center mt-10">
-                    <button onclick="window.close()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition transform hover:scale-105">
-                        <i class="fas fa-times mr-2"></i> Close this tab
-                    </button>
+            <!-- Rule 03 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">03</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-gray-600 to-gray-800 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-secret text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        Scam, fraud, fake news හෝ illegal activities සඳහා භාවිතා කළ නොහැක.
+                    </p>
                 </div>
+            </div>
+
+            <!-- Rule 04 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">04</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-hand-holding-dollar text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        Order එක තහවුරු වීමෙන් පසු <strong class="text-emerald-400">refund කිරීමක් සිදු නොවේ.</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rule 05 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">05</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-pink-600 to-rose-500 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-eye-slash text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        Boosting period එක තුළ channel/group/page එක private කිරීමෙන් හෝ delete කිරීමෙන් service එක අහිමි වේ.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rule 06 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">06</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-blue-500 to-cyan-500 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-link text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        ඔයාගේ link එක වැරදි නම් හෝ expire වී තිබුණොත් අපි වගකියන්නේ නැහැ.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rule 07 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">07</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-amber-500 to-yellow-500 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-clock text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        Service එක ආරම්භ වීමට <strong class="text-amber-400">පැය 1-6 අතර කාලයක්</strong> ගත විය හැක.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rule 08 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group">
+                <span class="watermark">08</span>
+                <div class="relative z-10">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 bg-gradient-to-tr from-red-700 to-red-900 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-gavel text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        Rules break කළහොත් order එක cancel කර refund නොලැබෙනු ඇත.
+                    </p>
+                </div>
+            </div>
+
+             <!-- Rule 09 -->
+             <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group md:col-span-2">
+                <span class="watermark">09</span>
+                <div class="relative z-10 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex-shrink-0 flex items-center justify-center bg-gradient-to-tr from-indigo-500 to-violet-500 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-repeat text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        ඔයා බුක් කරන චැනල් එකට දවස් කීපයකින්හෝ පසු හෝ එකම දවසෙ එකම පැක් එක දෙවතාවක් ගන්න බැ. ඔයාට ගන්න ඕනි පැක් එක හරියට තෝරලා අරගන්න. 
+                        <span class="block mt-2 text-indigo-300 bg-indigo-500/10 p-2 md:p-3 rounded-lg border border-indigo-500/20 text-sm md:text-base">
+                            <i class="fas fa-info-circle mr-2"></i> මෙය follow boost pack සදහා පමනක් අදාල වේ. Daily packs ඕන එකක් ඕන වෙලාවක ගන්න පුලුවන්.
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rule 10 -->
+            <div class="rule-card rounded-2xl md:rounded-3xl p-6 md:p-8 group md:col-span-2">
+                <span class="watermark">10</span>
+                <div class="relative z-10 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+                    <div class="icon-box w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex-shrink-0 flex items-center justify-center bg-gradient-to-tr from-blue-600 to-blue-400 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-users text-lg md:text-2xl text-white"></i>
+                    </div>
+                    <p class="text-gray-200 text-base md:text-lg font-sinhala leading-relaxed">
+                        බුක් කරපු පැක් එකේ followers ගාන එන්න දවස් කීපයක් ගත විය හැක. <strong class="text-blue-400">මෙය එක දවසින් සිදු නොවේ.</strong>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Warning Box - Critical Alert Style -->
+        <div class="mt-12 md:mt-16 relative overflow-hidden rounded-2xl md:rounded-3xl group">
+            <div class="absolute inset-0 bg-red-600/10 backdrop-blur-xl border border-red-500/30 animate-pulse-slow"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-red-600/5 to-transparent pointer-events-none"></div>
+            
+            <div class="relative z-10 p-6 md:p-12 text-center">
+                <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-red-500 rounded-full flex items-center justify-center mb-4 md:mb-6 shadow-[0_0_30px_rgba(239,68,68,0.6)] animate-bounce">
+                    <i class="fas fa-exclamation text-xl md:text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl md:text-3xl font-bold text-red-100 mb-3 md:mb-4 font-sinhala">
+                    Order එකක් තැබීමට පෙර මෙම නීති කරුණාකර කියවන්න!
+                </h3>
+                <p class="text-base md:text-lg text-red-200 font-sinhala">
+                    "Book Now" ක්ලික් කිරීමෙන් ඔබ මෙම නීතිවලට එකඟ වන බව සැලකේ.
+                </p>
             </div>
         </div>
+
+        <!-- Spacer for FAB -->
+        <div class="h-32"></div>
+
+    </div>
+
+    <!-- Floating Action Button (Close) -->
+    <div class="fixed bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none px-4">
+        <button onclick="window.close()" class="pointer-events-auto group relative overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-8 md:px-10 py-3 md:py-4 font-bold text-white shadow-[0_10px_40px_rgba(79,70,229,0.5)] transition-all hover:scale-105 hover:shadow-[0_20px_60px_rgba(79,70,229,0.7)] active:scale-95">
+            <span class="relative z-10 flex items-center gap-2 md:gap-3 text-base md:text-lg font-sans">
+                <i class="fas fa-times-circle text-lg md:text-xl"></i>
+                Close This Tab
+            </span>
+            <div class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_1.5s_infinite]"></div>
+        </button>
     </div>
 
 </body>
