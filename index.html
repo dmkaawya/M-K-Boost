@@ -785,7 +785,7 @@
                             <p class="text-xs text-gray-500">Total Amount</p>
                             <p id="total-amount" class="text-xl md:text-2xl font-bold text-white">Rs.0</p>
                         </div>
-                        <button type="submit" class="px-6 md:px-8 py-2.5 md:py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-white font-bold shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 text-sm md:text-base">Confirm</button>
+                        <button onclick="saveBooking()" type="submit" class="px-6 md:px-8 py-2.5 md:py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-white font-bold shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 text-sm md:text-base">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -939,5 +939,35 @@
             window.location.href = 'admin.html';
         }
     </script>
+
+<script>
+async function saveBooking() {
+  const name = document.getElementById("name").value;
+  const whatsapp = document.getElementById("whatsapp").value;
+  const service = document.getElementById("service").value;
+  const message = document.getElementById("message").value;
+
+  const { data, error } = await supabase
+    .from("bookings")
+    .insert([
+      {
+        name: name,
+        whatsapp: whatsapp,
+        service: service,
+        message: message
+      }
+    ]);
+
+  if (error) {
+    alert("Error saving booking");
+    console.log(error);
+  } else {
+    alert("Booking saved successfully");
+  }
+}
+</script>
+
+
+    
 </body>
 </html>
