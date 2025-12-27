@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&K Promotions - Premium WhatsApp Advertising</title>
-    
+    <!-- Supabase JS Client -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- CDNs -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -967,7 +968,86 @@ async function saveBooking() {
 }
 </script>
 
+<script>
+    // 1. Initialize Supabase
+    const supabaseUrl = 'https://npkqbwthgeadkkogtfky.supabase.co';
+    const supabaseKey = 'sb_publishable_hjibIptSd4zjA7NgAEig_w_gDzzKVSh';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // 2. Modal Functions
+    const modal = document.getElementById('booking-modal');
+    const modalContent = document.getElementById('modal-content');
+
+    function openBookingModal(packageName, price) {
+        document.getElementById('modal-package-name').innerText = packageName;
+        document.getElementById('modal-price').innerText = 'Rs.' + price.toLocaleString();
+        document.getElementById('package-name-input').value = packageName;
+        document.getElementById('package-price-input').value = price;
+        
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+    }
+
+    function closeBookingModal() {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+    }
+
+    // 3. Handle Form Submission
+    async function handleBookingSubmit(e) {
+        e.preventDefault();
+        
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        
+        // Show loading state
+        submitBtn.innerText = 'Processing...';
+        submitBtn.disabled = true;
+
+        const packageName = document.getElementById('package-name-input').value;
+        const price = document.getElementById('package-price-input').value;
+        const customerName = document.getElementById('customer-name').value;
+        const contactNumber = document.getElementById('contact-number').value;
+
+        try {
+            // Insert data into Supabase
+            const { data, error } = await supabase
+                .from('bookings')
+                .insert([
+                    { 
+                        package_name: packageName, 
+                        price: price, 
+                        customer_name: customerName, 
+                        contact_number: contactNumber 
+                    }
+                ]);
+
+            if (error) throw error;
+
+            // Success Feedback
+            alert('Booking Successful! We will contact you on WhatsApp shortly.');
+            closeBookingModal();
+            e.target.reset();
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again.');
+        } finally {
+            // Reset button
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        }
+    }
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeBookingModal();
+        }
+    }
+</script>
     
 </body>
 </html>
