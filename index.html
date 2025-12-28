@@ -930,7 +930,7 @@
             bookings.push(booking);
             localStorage.setItem('bookings', JSON.stringify(bookings));
 
-            const msg = `Booking Request:\nPackage: ${booking.package}\nTotal: Rs.${booking.total}\nName: ${booking.name}`;
+            const msg = `Booking Request:\nPackage: ${booking.package}\nTotal: Rs.${booking.total}\nextraDays: ${booking.extraDays}\nName: ${booking.name}\ncontacte: ${booking.contact}\ndate: ${booking.date}\ntime: ${booking.time}`;
             window.open(`https://wa.me/94775048455?text=${encodeURIComponent(msg)}`, '_blank');
             
             closeBookingModal();
