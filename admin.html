@@ -123,6 +123,9 @@
                 <a href="#" onclick="showSection('sec-new-booking', this); toggleSidebar()" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-white/5 hover:text-white transition-all">
                     <i class="fas fa-plus-circle w-5"></i> New Booking
                 </a>
+                <a href="#" onclick="showSection('sec-staff', this); toggleSidebar()" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-white/5 hover:text-white transition-all">
+                    <i class="fas fa-users w-5"></i> Staff
+                </a>
                 <a href="#" onclick="showSection('sec-my-profile', this); toggleSidebar()" class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-white/5 hover:text-white transition-all">
                     <i class="fas fa-user-circle w-5"></i> My Profile
                 </a>
@@ -325,6 +328,28 @@
                 </div>
             </section>
 
+            <!-- SECTION: STAFF -->
+            <section id="sec-staff" class="p-4 md:p-8 max-w-7xl mx-auto hidden animate-fade-in-up">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">Staff Profiles</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic staff cards will be inserted here -->
+                </div>
+            </section>
+
+            <!-- SECTION: STAFF DETAIL MODAL (HIDDEN) -->
+            <div id="staff-detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/70">
+                <div class="glass-panel w-full max-w-md p-8 rounded-3xl relative mx-4 overflow-y-auto max-h-[80vh]">
+                    <button onclick="closeStaffModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                    <h3 class="text-xl font-bold text-white mb-6">Staff Details</h3>
+                    <div id="staff-detail-content" class="space-y-4 text-gray-300">
+                        <!-- Dynamic details -->
+                    </div>
+                </div>
+            </div>
+
             <!-- NEW SECTION: MY PROFILE -->
             <section id="sec-my-profile" class="p-4 md:p-8 max-w-3xl mx-auto hidden animate-fade-in-up">
                 <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">My Profile</h2>
@@ -396,7 +421,6 @@
                     
                     <div class="border-t border-white/10 pt-6">
                         <h4 class="text-lg font-bold text-white mb-4">Withdraw History</h4>
-                        
                         <div class="glass-panel rounded-2xl overflow-hidden">
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-sm">
@@ -419,18 +443,14 @@
                             </div>
                         </div>
 
-                        <form id="withdraw-form" class="mt-8 space-y-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm text-gray-400 mb-2">Withdraw Amount (Rs)</label>
-                                    <input type="number" id="withdraw-amount" class="glass-input w-full px-4 py-3 rounded-xl" min="1" required>
-                                </div>
-                                <div class="flex items-end">
-                                    <button type="submit" class="w-full py-3 bg-green-600 hover:bg-green-500 rounded-xl text-white font-bold transition-all shadow-lg shadow-green-600/30">
-                                        Request Withdraw
-                                    </button>
-                                </div>
+                        <form id="withdraw-form" class="mt-6 space-y-4">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Withdraw Amount</label>
+                                <input type="number" id="withdraw-amount" class="glass-input w-full px-4 py-3 rounded-xl" required>
                             </div>
+                            <button type="submit" class="px-6 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-white font-medium transition-all">
+                                Withdraw
+                            </button>
                         </form>
                     </div>
                     
@@ -572,6 +592,56 @@
             renderFinances();
             renderUserManagement();
             renderMyProfile();
+            renderStaffList();
+        }
+
+        // === STAFF LIST RENDER ===
+        function renderStaffList() {
+            const container = document.querySelector('#sec-staff .grid');
+            container.innerHTML = '';
+
+            state.users.forEach(user => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-6 rounded-2xl flex flex-col justify-between';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-lg font-bold text-white">${user.role}</h4>
+                            <p class="text-sm text-gray-400">@${user.username}</p>
+                        </div>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <i class="fas fa-user-circle text-4xl text-indigo-400"></i>
+                            <p class="text-sm text-gray-300">ID: ${user.id}</p>
+                            <p class="text-sm text-gray-300">${user.email || 'N/A'}</p>
+                        </div>
+                    </div>
+                    ${ (state.currentUser.role === 'Owner' || state.currentUser.role === 'Manager') ? `<button onclick="showStaffDetails('${user.username}')" class="mt-4 w-full py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white font-medium transition-all">View Details</button>` : '' }
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.showStaffDetails = function(username) {
+            const user = state.users.find(u => u.username === username);
+            if (!user) return;
+
+            const content = document.getElementById('staff-detail-content');
+            content.innerHTML = `
+                <p><strong>First Name:</strong> ${user.first_name || 'N/A'}</p>
+                <p><strong>Last Name:</strong> ${user.last_name || 'N/A'}</p>
+                <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
+                <p><strong>Number:</strong> ${user.number || 'N/A'}</p>
+                <p><strong>District:</strong> ${user.district || 'N/A'}</p>
+                <p><strong>Description:</strong> ${user.description || 'N/A'}</p>
+                <p><strong>Profit Share:</strong> ${(user.share * 100).toFixed(0)}%</p>
+                <p><strong>Balance:</strong> Rs. ${user.balance.toLocaleString()}</p>
+            `;
+
+            document.getElementById('staff-detail-modal').classList.remove('hidden');
+        }
+
+        window.closeStaffModal = function() {
+            document.getElementById('staff-detail-modal').classList.add('hidden');
         }
 
         // === MY PROFILE RENDER ===
@@ -593,7 +663,7 @@
             document.getElementById('profile-total-earnings').textContent = `Rs. ${profit.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
             document.getElementById('profile-balance').textContent = `Rs. ${state.currentUser.balance.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
 
-           const tableBody = document.getElementById('withdraw-history-table');
+            const tableBody = document.getElementById('withdraw-history-table');
             tableBody.innerHTML = '';
             const noMsg = document.getElementById('no-withdraw-msg');
 
@@ -612,51 +682,6 @@
                     `;
                     tableBody.appendChild(tr);
                 });
-            }
-        }
-
-        // === WITHDRAW (UPDATED TO GENERATE TRANSACTION ID) ===
-        function handleWithdraw(e) {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            if (isNaN(amount) || amount <= 0 || amount > state.currentUser.balance) {
-                return Swal.fire('Error', 'Invalid amount or insufficient balance', 'error');
-            }
-
-            const now = new Date();
-            const transaction = {
-                id: `TRX${String(state.currentUser.withdraw_history.length + 1).padStart(6, '0')}`,
-                amount,
-                date: now.toISOString().split('T')[0],
-                time: now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-            };
-
-            state.currentUser.balance -= amount;
-            state.currentUser.withdraw_history.push(transaction);
-
-            const index = state.users.findIndex(u => u.username === state.currentUser.username);
-            state.users[index] = state.currentUser;
-            saveUsers();
-            Swal.fire('Success', `Withdraw requested! Transaction ID: ${transaction.id}`, 'success');
-            renderMyProfile();
-            document.getElementById('withdraw-amount').value = '';
-        }
-
-        // === PROFILE UPDATE ===
-        function handleProfileUpdate(e) {
-            e.preventDefault();
-            const index = state.users.findIndex(u => u.username === state.currentUser.username);
-            if (index !== -1) {
-                state.users[index].first_name = document.getElementById('profile-first-name').value;
-                state.users[index].last_name = document.getElementById('profile-last-name').value;
-                state.users[index].email = document.getElementById('profile-email').value;
-                state.users[index].number = document.getElementById('profile-number').value;
-                state.users[index].district = document.getElementById('profile-district').value;
-                state.users[index].description = document.getElementById('profile-description').value;
-                state.currentUser = state.users[index];
-                saveUsers();
-                Swal.fire('Updated!', 'Profile details saved.', 'success');
-                renderMyProfile();
             }
         }
 
@@ -694,11 +719,31 @@
             }
         }
 
+        // === PROFILE UPDATE ===
+        function handleProfileUpdate(e) {
+            e.preventDefault();
+            const index = state.users.findIndex(u => u.username === state.currentUser.username);
+            if (index !== -1) {
+                state.users[index].first_name = document.getElementById('profile-first-name').value;
+                state.users[index].last_name = document.getElementById('profile-last-name').value;
+                state.users[index].email = document.getElementById('profile-email').value;
+                state.users[index].number = document.getElementById('profile-number').value;
+                state.users[index].district = document.getElementById('profile-district').value;
+                state.users[index].description = document.getElementById('profile-description').value;
+                state.currentUser = state.users[index];
+                saveUsers();
+                Swal.fire('Updated!', 'Profile details saved.', 'success');
+                renderMyProfile();
+            }
+        }
+
         // === DASHBOARD ===
         function renderDashboard() {
             const total = state.bookings.length;
             const income = state.bookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
-            const paid = state.bookings.filter(b => b.paymentStatus === 'paid').reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+            const paid = state.bookings
+                .filter(b => b.paymentStatus === 'paid')
+                .reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
             
             document.getElementById('dash-total-orders').textContent = total;
             document.getElementById('dash-total-income').textContent = `Rs. ${income.toLocaleString()}`;
@@ -706,7 +751,7 @@
             document.getElementById('dash-pending-cash').textContent = `Rs. ${(income - paid).toLocaleString()}`;
         }
 
-        // === BOOKINGS ===
+        // === BOOKINGS Logic ===
         function renderBookingsTable(filterText = '') {
             const tbody = document.getElementById('bookings-table-body');
             tbody.innerHTML = '';
@@ -716,7 +761,7 @@
                 b.contact.includes(filterText)
             ).sort((a,b) => b.id - a.id);
 
-            if (filtered.length === 0) {
+            if(filtered.length === 0) {
                 document.getElementById('no-data-msg').classList.remove('hidden');
             } else {
                 document.getElementById('no-data-msg').classList.add('hidden');
@@ -764,7 +809,7 @@
 
         window.togglePaymentStatus = function(id) {
             const booking = state.bookings.find(b => b.id === id);
-            if (booking) {
+            if(booking) {
                 booking.paymentStatus = booking.paymentStatus === 'paid' ? 'unpaid' : 'paid';
                 saveBookings();
                 refreshAll();
@@ -919,6 +964,7 @@
                     state.users.push(result.value);
                     saveUsers();
                     renderUserManagement();
+                    renderStaffList();
                     Swal.fire('Added!', '', 'success');
                 }
             });
@@ -934,6 +980,7 @@
                     state.users.splice(index, 1);
                     saveUsers();
                     renderUserManagement();
+                    renderStaffList();
                 }
             });
         }
@@ -969,8 +1016,10 @@
             document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
             
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            el.classList.add('active');
+            if(el) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                el.classList.add('active');
+            }
         }
     </script>
 </body>
