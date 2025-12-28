@@ -202,10 +202,6 @@
      </header>
      <!-- Content Area -->
      <main class="flex-1 overflow-y-auto p-4 md:p-8">
-      <!-- All your sections here (dashboard, bookings, etc.) -->
-      <!-- They already have responsive classes like grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 etc. -->
-      <!-- No need to change them much -->
-      <!-- Example: Staff section is already responsive with grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 -->
       <!-- SECTION: DASHBOARD -->
       <section class="p-4 md:p-8 max-w-7xl mx-auto animate-fade-in-up" id="sec-dashboard">
        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">
@@ -299,6 +295,21 @@
             <th class="px-6 py-4">
              Package
             </th>
+            <th class="px-6 py-4">
+             Extra Payment
+            </th>
+            <th class="px-6 py-4">
+             Extra Buy Time
+            </th>
+            <th class="px-6 py-4">
+             Refer ID
+            </th>
+            <th class="px-6 py-4">
+             Channel
+            </th>
+            <th class="px-6 py-4">
+             Note
+            </th>
             <th class="px-6 py-4 text-right">
              Amount
             </th>
@@ -347,12 +358,58 @@
          </p>
         </div>
        </div>
-       <div class="hidden" id="profit-distribution-section">
+       <div id="profit-distribution-section">
         <h3 class="text-xl font-bold text-white mb-6">
          Profit Distribution by Role
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="profit-cards">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" id="profit-cards">
          <!-- Dynamic profit cards will be inserted here -->
+        </div>
+        <!-- Earned Money Log -->
+        <h3 class="text-xl font-bold text-white mb-6">
+         Earned Money Log
+        </h3>
+        <div class="glass-panel rounded-2xl overflow-hidden">
+         <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+           <thead class="bg-white/5 text-gray-400 uppercase text-xs font-semibold">
+            <tr>
+             <th class="px-6 py-4">
+              Date & Time
+             </th>
+             <th class="px-6 py-4 text-right">
+              Amount (Rs)
+             </th>
+            </tr>
+           </thead>
+           <tbody class="divide-y divide-white/5 text-gray-300">
+            <tr class="hover:bg-white/5">
+             <td class="px-6 py-4">
+              2025-12-27 18:30:45
+             </td>
+             <td class="px-6 py-4 text-right font-bold text-emerald-400">
+              2,500
+             </td>
+            </tr>
+            <tr class="hover:bg-white/5">
+             <td class="px-6 py-4">
+              2025-12-26 14:15:22
+             </td>
+             <td class="px-6 py-4 text-right font-bold text-emerald-400">
+              1,800
+             </td>
+            </tr>
+            <tr class="hover:bg-white/5">
+             <td class="px-6 py-4">
+              2025-12-25 20:45:10
+             </td>
+             <td class="px-6 py-4 text-right font-bold text-emerald-400">
+              3,200
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
         </div>
        </div>
       </section>
@@ -427,6 +484,18 @@
          </div>
          <div>
           <label class="block text-sm text-gray-400 mb-2">
+           Channel Name
+          </label>
+          <input class="glass-input w-full px-4 py-3 rounded-xl" id="nb-channel" placeholder="e.g. joke vides" type="text"/>
+         </div>
+         <div>
+          <label class="block text-sm text-gray-400 mb-2">
+           Short Note
+          </label>
+          <input class="glass-input w-full px-4 py-3 rounded-xl" id="nb-note" placeholder="Short note" type="text"/>
+         </div>
+         <div>
+          <label class="block text-sm text-gray-400 mb-2">
            Payment Status
           </label>
           <div class="flex gap-4">
@@ -476,7 +545,7 @@
         </div>
        </div>
       </div>
-      <!-- NEW SECTION: MY PROFILE -->
+      <!-- SECTION: MY PROFILE -->
       <section class="p-4 md:p-8 max-w-3xl mx-auto hidden animate-fade-in-up" id="sec-my-profile">
        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">
         My Profile
@@ -505,13 +574,13 @@
            <label class="block text-sm text-gray-400 mb-2">
             First Name
            </label>
-           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-first-name" type="text"/>
+           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-first-name" type="text" value="kaawya"/>
           </div>
           <div>
            <label class="block text-sm text-gray-400 mb-2">
             Last Name
            </label>
-           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-last-name" type="text"/>
+           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-last-name" type="text" value="chalaka"/>
           </div>
          </div>
          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -519,33 +588,41 @@
            <label class="block text-sm text-gray-400 mb-2">
             Email
            </label>
-           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-email" type="email"/>
+           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-email" type="email" value="dmkaawya@gmail.com"/>
           </div>
           <div>
            <label class="block text-sm text-gray-400 mb-2">
             Number
            </label>
-           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-number" type="tel"/>
+           <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-number" type="tel" value="0775048455"/>
           </div>
          </div>
          <div>
           <label class="block text-sm text-gray-400 mb-2">
            District
           </label>
-          <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-district" type="text"/>
+          <input class="glass-input w-full px-4 py-3 rounded-xl" id="profile-district" type="text" value="kalutara"/>
          </div>
          <div>
           <label class="block text-sm text-gray-400 mb-2">
            Short Description
           </label>
-          <textarea class="glass-input w-full px-4 py-3 rounded-xl" id="profile-description" rows="3">
-          </textarea>
+          <textarea class="glass-input w-full px-4 py-3 rounded-xl" id="profile-description" rows="3">meya thama supiri</textarea>
          </div>
          <button class="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white font-medium transition-all" type="submit">
           Update Profile
          </button>
         </form>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- My Channel -->
+        <div class="bg-white/5 p-6 rounded-2xl">
+         <h4 class="text-lg font-bold text-white mb-4">
+          My Channel
+         </h4>
+         <a href="https://www.youtube.com/@yourchannel" target="_blank" class="text-indigo-400 hover:underline text-lg">
+          https://www.youtube.com/@yourchannel
+         </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
          <div class="bg-white/5 p-4 rounded-xl">
           <p class="text-sm text-gray-400 uppercase mb-1">
            Profit Share
@@ -595,11 +672,24 @@
              </tr>
             </thead>
             <tbody class="divide-y divide-white/5 text-gray-300" id="withdraw-history-table">
-             <!-- Rows will be inserted here -->
+             <tr>
+              <td class="px-6 py-4 text-indigo-300 font-medium">
+               TRX0451212200
+              </td>
+              <td class="px-6 py-4 text-white">
+               Rs. 200
+              </td>
+              <td class="px-6 py-4 text-gray-300">
+               2025-12-23
+              </td>
+              <td class="px-6 py-4 text-gray-300">
+               14:25:36
+              </td>
+             </tr>
             </tbody>
            </table>
           </div>
-          <div class="py-8 text-center text-gray-500" id="no-withdraw-msg">
+          <div class="py-8 text-center text-gray-500 hidden" id="no-withdraw-msg">
            <i class="fas fa-history text-4xl mb-3 opacity-50">
            </i>
            <p>
@@ -688,10 +778,41 @@
 
         // === STATE ===
         const state = {
-            bookings: [],
+            bookings: [
+                {
+                    id: 1735400001,
+                    name: "kaawya",
+                    contact: "0775048455",
+                    package: "1k pack",
+                    total: 1000,
+                    extra_payment: 0,
+                    extra_buy_time: "0",
+                    refer_id: "malidu",
+                    channel: "joke vides",
+                    note: "wp hloo",
+                    date: "2025-12-10",
+                    time: "15:27",
+                    paymentStatus: "paid"
+                },
+                {
+                    id: 1735400002,
+                    name: "chalaka",
+                    contact: "0762717144",
+                    package: "dual boost",
+                    total: 1500,
+                    extra_payment: 200,
+                    extra_buy_time: "2",
+                    refer_id: "malidu",
+                    channel: "english status",
+                    note: "test note",
+                    date: "2025-12-10",
+                    time: "15:27",
+                    paymentStatus: "unpaid"
+                }
+            ],
             currentUser: null,
             users: [
-                { id: 'DMC001', username: "owner", password: "owner123", role: "Owner", share: 0.40, first_name: '', last_name: '', email: '', number: '', district: '', description: '', balance: 0, withdraw_history: [] },
+                { id: 'DMC001', username: "owner", password: "owner123", role: "Owner", share: 0.40, first_name: 'kaawya', last_name: 'chalaka', email: 'dmkaawya@gmail.com', number: '0775048455', district: 'kalutara', description: 'meya thama supiri', balance: 0, withdraw_history: [{amount: 200, date: "2025-12-23", time: "14:25:36"}] },
                 { id: 'DMC002', username: "manager", password: "mgr123", role: "Manager", share: 0.20, first_name: '', last_name: '', email: '', number: '', district: '', description: '', balance: 0, withdraw_history: [] },
                 { id: 'DMC003', username: "developer", password: "dev123", role: "Developer", share: 0.15, first_name: '', last_name: '', email: '', number: '', district: '', description: '', balance: 0, withdraw_history: [] },
                 { id: 'DMC004', username: "admin", password: "admin123", role: "Admin", share: 0.10, first_name: '', last_name: '', email: '', number: '', district: '', description: '', balance: 0, withdraw_history: [] },
@@ -957,6 +1078,11 @@
                             <div class="text-xs text-gray-500">${b.contact}</div>
                         </td>
                         <td class="px-6 py-4 text-indigo-300 font-medium">${b.package}</td>
+                        <td class="px-6 py-4">Rs. ${b.extra_payment || 0}</td>
+                        <td class="px-6 py-4">${b.extra_buy_time || '-'}</td>
+                        <td class="px-6 py-4">${b.refer_id || '-'}</td>
+                        <td class="px-6 py-4">${b.channel || '-'}</td>
+                        <td class="px-6 py-4 text-xs">${b.note || '-'}</td>
                         <td class="px-6 py-4 text-right font-bold text-white">Rs. ${parseFloat(b.total).toLocaleString()}</td>
                         <td class="px-6 py-4 text-center">
                             <button onclick="togglePaymentStatus(${b.id})" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider transition-all border ${isPaid ? 'bg-green-500/20 text-green-400 border-green-500/20 hover:bg-green-500/30' : 'bg-orange-500/20 text-orange-400 border-orange-500/20 hover:bg-orange-500/30'}">
@@ -1064,6 +1190,8 @@
                 extra_payment: parseFloat(document.getElementById('nb-extra-payment').value) || 0,
                 extra_buy_time: document.getElementById('nb-extra-buy-time').value,
                 refer_id: document.getElementById('nb-refer-id').value,
+                channel: document.getElementById('nb-channel').value,
+                note: document.getElementById('nb-note').value,
                 paymentStatus: document.querySelector('input[name="nb-status"]:checked').value
             };
 
@@ -1198,28 +1326,22 @@
                 el.classList.add('active');
             }
         }
-  </script>
-  <script>
-   function openSidebar() {
+
+        function openSidebar() {
             document.getElementById('sidebar').classList.remove('-translate-x-full');
-            document.getElementById('mobile-overlay').classList.remove('hidden');
+            document.getElementById('sidebar-overlay').classList.remove('hidden');
         }
 
         function closeSidebar() {
             document.getElementById('sidebar').classList.add('-translate-x-full');
-            document.getElementById('mobile-overlay').classList.add('hidden');
+            document.getElementById('sidebar-overlay').classList.add('hidden');
         }
 
-        // Close sidebar when clicking a link (mobile)
-        // Already added closeSidebar() in onclick of nav links
-
-        // Close when resizing to desktop
         window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) { // md breakpoint
+            if (window.innerWidth >= 768) {
                 closeSidebar();
             }
         });
   </script>
-  <!-- Rest of your script (state, functions, etc.) remains the same -->
  </body>
 </html>
