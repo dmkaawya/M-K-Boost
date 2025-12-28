@@ -89,7 +89,7 @@
         .animate-fade-in-up { animation: fade-in-up 0.5s ease-out forwards; }
     </style>
 </head>
-<body class="overflow-hidden h-screen font-sans text-gray-300">
+<body oncontextmenu="return false;" onkeydown="if(event.ctrlKey && event.keyCode == 85) return false;" class="overflow-hidden h-screen font-sans text-gray-300">
 
     <!-- Login Screen -->
     <div id="login-view" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]">
